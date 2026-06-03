@@ -1,3 +1,6 @@
+import MovieCard from "@/components/MovieCard/MovieCard";
+import { PaginatedMovieApiResponse } from "@/types/types";
+
 export default async function Home() {
   const token = process.env.API_KEY;
 
@@ -13,14 +16,14 @@ export default async function Home() {
     options,
   );
 
-  const movies = await data.json();
-
-  console.log(movies.results);
+  const movies: PaginatedMovieApiResponse = await data.json();
 
   return (
-    <ul>
+    <ul className="mx-auto flex flex-col gap-4">
       {movies.results.map((movie) => (
-        <li key={movie.id}>{movie.title}</li>
+        <li key={movie.id}>
+          <MovieCard title={movie.title} poster_path={movie.poster_path} />
+        </li>
       ))}
     </ul>
   );
